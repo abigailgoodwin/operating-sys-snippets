@@ -61,35 +61,30 @@ int main(int argc, char* argv[])
     {
         printf("(%d/%d) forks created.\n", currentForks, numForks);
         pid = fork();
+
+        /* Step 5: Fork Code */
         if (pid == 0)
         {
-            break;
+            close(p[0]);   //close pipe read end
+            close(1); // close stdout
+            dup2(p[1], 1); //move stdout to pipe of cp[1]
+	        close(0);       //close stdin 
+            execl("./fileScanner", "fileScanner", inFile, (char *)0);
         }
     }
     
-    /* Step 5: Fork Code */
-    if (pid == 0)
+    /* Step 6: Parent Code */
+    wait(NULL);
+    char pipeReturn;
+    close(p[1]);
+    while (read(p[0], &pipeReturn, 1) == 1)
     {
-        close(p[0]);   //close pipe read end
-        close(1); // close stdout
-        dup2(p[1], 1); //move stdout to pipe of cp[1]
-	    close(0);       //close stdin 
-        execl("./fileScanner", "fileScanner", inFile, (char *)0);
+        printf("%c", pipeReturn);
     }
-    else
-    {
-        wait(NULL);
-        char pipeReturn;
-        close(p[1]);
-        while (read(p[0], &pipeReturn, 1) == 1)
-        {
-            printf("%c", pipeReturn);
-        }
-        
-        /* Last Step: Report Time */
-        runtime = clock() - runtime;
-        printf("\nTotal Runtime: %f seconds.\n", (((double)runtime)/CLOCKS_PER_SEC));
-    }
+    
+    /* Last Step: Report Time */
+    runtime = clock() - runtime;
+    printf("\nTotal Runtime: %f seconds.\n", (((double)runtime)/CLOCKS_PER_SEC));
 
     return 0;
 }
