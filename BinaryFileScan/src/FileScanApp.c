@@ -57,20 +57,13 @@ int main(int argc, char* argv[])
     int pid = -1;
 
     /* Step 4: Start Forking */
-    if (numForks == 1)
+    for (int currentForks = 1; currentForks <= numForks; currentForks++)
     {
-        execl("./fileScanner", "fileScanner", inFile, (char *)0);
-    }
-    else
-    {
-        for (int currentForks = 1; currentForks <= numForks; currentForks++)
+        printf("(%d/%d) forks created.\n", currentForks, numForks);
+        pid = fork();
+        if (pid == 0)
         {
-            printf("(%d/%d) forks created.\n", currentForks, numForks);
-            pid = fork();
-            if (pid == 0)
-            {
-                break;
-            }
+            break;
         }
     }
     
