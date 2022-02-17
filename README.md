@@ -1,8 +1,12 @@
-# operating-sys-snippets
+operating-sys-snippets
+======================
 A collection of programs/scripts that I've written while studying operating systems.
 
-## Contents
-### BinaryScan
+Contents
+========
+
+BinaryScan
+----------
 A short program that parses a binary file, full of integers, to determine the min and max.
 
 #### Usage
