@@ -10,7 +10,8 @@ BinaryScan
 A short program that parses a binary file, full of integers, to determine the min and max.
 
 #### Usage
-* From the commandline, run: ```hw3 <numForks> <file>```
+* First, while in the top-level directory of the project, ```make```.
+* Then, run: ```hw3 <numForks> <file>```
 * ```<numForks>``` must be an integer from 1 to and including 4.
 * ```<file>``` must be the file path to a binary file.
 
